@@ -1,0 +1,40 @@
+import time
+import image
+
+imagename = '20235581355.jpg'
+
+
+
+
+original_image = image.FileImage(imagename)
+
+width = original_image.get_width()
+height = original_image.get_height()
+print(width, height)
+#win = image.ImageWin(width, height, "Image Processing") # set window to image size
+
+#original_image.draw(win)
+my_image = original_image.copy()
+
+timeStamp = round(time.time())
+print(str(timeStamp))
+greencount = 0
+pixelcount = width*height
+cloudcount = 0
+print ("About to loop " + str(height * width) + " times, one for each pixel")
+for row in range(height):
+    #print(row)
+    for col in range(width):
+        v = my_image.get_pixel(col,row)
+        #print(v.green,v.red,v.blue)
+        # Apply filter\ or processing of some form
+        if v.blue-4<v.green<v.blue+4 and v.red-4<v.green<v.red+4:
+            cloudcount += 1
+            #print(cloudcount)
+        elif v.green>v.red+3:
+            greencount+=1
+            #print(greencount)
+            
+ratiogreen = greencount/(pixelcount-cloudcount)
+print(pixelcount,greencount,cloudcount)
+print("the ratio of green in "+imagename+"is: ",ratiogreen)
